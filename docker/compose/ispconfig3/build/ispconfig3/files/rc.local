@@ -1,0 +1,38 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+service rsyslog restart
+service ntp restart
+service ssh restart
+service bind9 restart
+service mysql restart
+service apache2 restart
+service amavis restart
+service clamav-freshclam restart
+service clamav-daemon restart
+service postfix restart
+service dovecot restart
+service jailkit restart
+service mailman restart
+service php5-fpm restart
+service fail2ban restart
+service quota restart
+service quotarpc restart
+service memcached restart
+service pure-ftpd-mysql restart
+service cron restart
+
+/bin/bash
+
+exit 0
+

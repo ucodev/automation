@@ -1,0 +1,23 @@
+#!/usr/bin/expect
+
+set timeout 20
+
+# Spawn ISPConfig installer
+spawn newlist mailman
+
+
+# Set environment variables based on command line arguments
+set MAILMAN_ADMIN_EMAIL [lindex $argv 0]
+set MAILMAN_ADMIN_PASSWORD [lindex $argv 1]
+
+
+# Configuration
+expect "email of the person"
+send "$MAILMAN_ADMIN_EMAIL\n"
+
+expect "mailman password"
+send "$MAILMAN_ADMIN_PASSWORD\n"
+
+expect "Hit enter"
+send "\n"
+

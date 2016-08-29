@@ -1,0 +1,109 @@
+#!/usr/bin/expect
+
+set timeout 20
+
+# Spawn ISPConfig installer
+spawn /usr/bin/php -q install.php
+
+
+# Set environment variables based on command line arguments
+set HOST_FQDN [lindex $argv 0]
+set MYSQL_ROOT_PASSWORD [lindex $argv 1]
+set CERT_COUNTRY [lindex $argv 2]
+set CERT_STATE [lindex $argv 3]
+set CERT_CITY [lindex $argv 4]
+set CERT_ORG [lindex $argv 5]
+set CERT_UNIT [lindex $argv 6]
+set CERT_EMAIL [lindex $argv 7]
+
+
+# Base settings
+expect "language"
+send "en\n"
+
+expect "mode"
+send "standard\n"
+
+expect "FQDN"
+send "$HOST_FQDN\n"
+
+expect "hostname"
+send "localhost\n"
+
+expect "root username"
+send "root\n"
+
+expect "root password"
+send "$MYSQL_ROOT_PASSWORD\n"
+
+expect "database"
+send "dbispconfig\n"
+
+expect "charset"
+send "utf8\n"
+
+
+# Certificate
+
+expect "Country Name"
+send "$CERT_COUNTRY\n"
+
+expect "State"
+send "$CERT_STATE\n"
+
+expect "Locality"
+send "$CERT_CITY\n"
+
+expect "Organization Name"
+send "$CERT_ORG\n"
+
+expect "Organizational Unit"
+send "$CERT_UNIT\n"
+
+expect "Common Name"
+send "$HOST_FQDN\n"
+
+expect "Email"
+send "$CERT_EMAIL\n"
+
+
+# Ports
+
+expect "ISPConfig Port"
+send "8080\n"
+
+expect "SSL"
+send "y\n"
+
+
+# Certificate
+
+expect "Country Name"
+send "$CERT_COUNTRY\n"
+
+expect "State"
+send "$CERT_STATE\n"
+
+expect "Locality"
+send "$CERT_CITY\n"
+
+expect "Organization Name"
+send "$CERT_ORG\n"
+
+expect "Organizational Unit"
+send "$CERT_UNIT\n"
+
+expect "Common Name"
+send "$HOST_FQDN\n"
+
+expect "Email"
+send "$CERT_EMAIL\n"
+
+expect "challenge password"
+send "\n"
+
+expect "optional company"
+send "\n"
+
+expect "Installation completed."
+

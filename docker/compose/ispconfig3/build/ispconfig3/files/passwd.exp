@@ -1,0 +1,19 @@
+#!/usr/bin/expect
+
+set timeout 20
+
+# Set environment variables based on command line arguments
+set USERNAME [lindex $argv 0]
+set PASSWORD [lindex $argv 1]
+
+# Spawn ISPConfig installer
+spawn passwd $USERNAME
+
+expect "Enter new UNIX password:"
+send "$PASSWORD\n"
+
+expect "Retype new UNIX password:"
+send "$PASSWORD\n"
+
+expect "password updated successfully"
+
