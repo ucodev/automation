@@ -2,7 +2,7 @@ version: '2'
 
 services:
   ndphp:
-    build: ./ndphp
+    build: ./build/ndphp
     image: ucodev/ndphp:latest
     volumes:
       - nd_www:/var/www
@@ -22,7 +22,7 @@ services:
 
   dbms:
     build:
-      context: ./mysql
+      context: ./build/mysql
       args:
         MYSQL_ROOT_PASSWORD: password
         MYSQL_USER_DATABASE: ndphp
@@ -42,11 +42,11 @@ services:
         ipv4_address: 192.168.100.3
 
   webserver:
-    build: ./apache
+    build: ./build/apache
     image: ucodev/apache:latest
 
   base:
-    build: ./base
+    build: ./build/base
     image: ucodev/base:latest
 
 volumes:
