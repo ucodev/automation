@@ -7,8 +7,18 @@ FROM ucodev/base
 MAINTAINER Pedro A. Hortas <pah@ucodev.org>
 LABEL Description="Install the latest version of EventQL" Vendor="uCodev" Version="0.1"
 
+# Upgrade system
+RUN apt-get update && apt-get upgrade -y
+
 # Install dependencies
-RUN apt-get install -y g++ cmake make automake autoconf zlib1g-dev python-dev git
+RUN apt-get install -y clang cmake make automake autoconf zlib1g-dev python-dev git
+RUN echo "cc manual `which clang`" | update-alternatives --set-selections
+RUN echo "c89 manual `which clang`" | update-alternatives --set-selections
+RUN echo "c99 manual `which clang`" | update-alternatives --set-selections
+RUN echo "c++ manual `which clang++`" | update-alternatives --set-selections
+RUN update-alternatives --install /usr/bin/cpp cpp /usr/bin/clang++ 15
+RUN echo "cpp manual `which clang++`" | update-alternatives --set-selections
+RUN apt-get remove --purge -y gcc
 
 # Fetch source
 RUN git clone https://github.com/eventql/eventql /usr/src/eventql
