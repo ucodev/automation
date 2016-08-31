@@ -1,0 +1,27 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+if ! [ -f /var/lib/eventql/.cluster_initialized ]; then
+  (evqlctl -c /etc/evqld.conf cluster-create || exit 0)
+  (evqlctl -c /etc/evqld.conf cluster-add-server --server_name `hostname` || exit 0)
+  touch /var/lib/eventql/.cluster_initialized
+fi
+
+rm -f /var/run/eventql.pid
+
+/usr/local/bin/evqld --daemonize
+
+/bin/bash
+
+exit 0
+
