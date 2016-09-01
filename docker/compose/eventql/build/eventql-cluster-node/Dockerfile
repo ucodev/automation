@@ -24,6 +24,11 @@ ARG EVENTQL_CLUSTER_ZOOKEEPER_HOSTS="evql-zookeeper-01.somedomain.tld:2181"
 EXPOSE 9175
 
 
+# Monitoring (check if there's at least one node UP)
+HEALTHCHECK --interval=2m --timeout=3s \
+    CMD evqlctl -c /etc/evqld.conf cluster-status 2> /dev/null | grep UP
+
+
 # Configure EventQL host
 RUN echo "[client]" > /etc/evql.conf
 RUN echo "host = ${EVENTQL_CLIENT_HOST}" >> /etc/evql.conf

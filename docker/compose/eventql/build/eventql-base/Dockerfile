@@ -25,5 +25,17 @@ RUN git clone https://github.com/eventql/eventql /usr/src/eventql
 
 # Configure, compile and install EventQL
 WORKDIR /usr/src/eventql
-RUN ./autogen.sh && ./configure && SHELL=/bin/bash make && make install
+RUN ./autogen.sh
+RUN ./configure --enable-mysql-tools
+RUN SHELL=/bin/bash make
+RUN make install
+
+# Copy example files
+RUN mkdir /root/examples
+COPY files/create_db.sh /root/examples/create_db.sh
+RUN chmod 755 /root/examples/*
+
+# Cleanup
+WORKDIR /
+RUN rm -rf /usr/src/eventql
 
